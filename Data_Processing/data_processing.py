@@ -70,7 +70,8 @@ def check_unlabeled_origin(image_name, raw_data_dir, dataset='TMED-156-52'):
         partiallylabeled_flag = False
 
         images_labeled = os.listdir(os.path.join(raw_data_dir, 'labeled'))
-        images_partiallylabeled = os.listdir(os.path.join(raw_data_dir, 'partially_labeled'))
+        #images_partiallylabeled = os.listdir(os.path.join(raw_data_dir, 'partially_labeled'))
+        images_partiallylabeled = os.listdir(os.path.join(raw_data_dir, 'unlabeled'))
         if image_name in images_labeled:
 #             print('{} in labeled/'.format(image_name))
             labeled_flag = True
