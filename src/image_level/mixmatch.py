@@ -174,6 +174,7 @@ def main(argv):
     DATASETS = {}
     DATASETS.update([data_pair.DataSet.creator('echo', train_labeled_files, train_unlabeled_files, valid_files, test_files, [data_pair.augment_echo, data_pair.stack_augment(data_pair.augment_echo)], nclass=nclass, height=height, width=width, colors=colors)])
     
+    print("---------", DATASETS)
     dataset = DATASETS[FLAGS.dataset]()
     log_width = utils.ilog2(dataset.width)
     model = MixMatch(
@@ -230,6 +231,7 @@ if __name__ == '__main__':
     flags.DEFINE_string('valid_files', 'valid_VIEW.tfrecord', 'name of the valid tfrecord')
     flags.DEFINE_string('test_files', 'test_VIEW.tfrecord', 'name of the test tfrecord')   
     flags.DEFINE_string('train_unlabeled_files', 'train-unlabel_VIEW.tfrecord', 'name of the unlabeled set tfrecord')
+    flags.DEFINE_string('report_type', 'EMA_BalancedAccuracy', 'report type???')
     FLAGS.set_default('dataset', 'echo')
     FLAGS.set_default('batch', 64)
     FLAGS.set_default('lr', 0.002)

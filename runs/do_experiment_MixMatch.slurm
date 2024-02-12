@@ -20,7 +20,7 @@
 
 CUDA_VISIBLE_DEVICES=2 python "/home/baharkhd/ssl-for-echocardiograms-miccai2024/src/image_level/mixmatch.py" \
     --train_kimg 2000 \
-    --train_dir "../../experiments/table5/MixMatch/fold0" \
+    --train_dir "/home/baharkhd/ssl-for-echocardiograms-miccai2024/experiments/table5/MixMatch/fold0" \
     --task_name "DiagnosisClassification" \
     --train_labeled_files 'train_DIAGNOSIS.tfrecord' \
     --train_unlabeled_files 'unlabeled_DIAGNOSIS.tfrecord' \

@@ -72,6 +72,7 @@ def default_parse(dataset: tf.data.Dataset, parse_fn=record_parse) -> tf.data.Da
 
 
 def dataset(filenames: list) -> tf.data.Dataset:
+    print("++++++++", filenames)
     filenames = sorted(sum([glob.glob(x) for x in filenames], []))
     if not filenames:
         raise ValueError('Empty dataset, did you mount gcsfuse bucket?')
