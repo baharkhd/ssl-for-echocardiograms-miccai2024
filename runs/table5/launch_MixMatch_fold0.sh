@@ -25,9 +25,9 @@ export warmup_kimg=1024
 export train_dir="../../experiments/table5/MixMatch/fold0"
 export task_name="DiagnosisClassification"
 export report_type="EMA_BalancedAccuracy"
-export train_labeled_files='train-label_DIAGNOSIS.tfrecord'
-export train_unlabeled_files='train-unlabel_DIAGNOSIS.tfrecord'
-export valid_files='valid_DIAGNOSIS.tfrecord'
+export train_labeled_files='train_DIAGNOSIS.tfrecord'
+export train_unlabeled_files='unlabeled_DIAGNOSIS.tfrecord'
+export valid_files='val_DIAGNOSIS.tfrecord'
 export test_files='test_DIAGNOSIS.tfrecord'
 export mixmode='xxy.yxy'
 

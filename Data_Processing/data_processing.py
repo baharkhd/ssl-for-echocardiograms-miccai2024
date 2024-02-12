@@ -100,8 +100,9 @@ def main(args_dict):
     if not os.path.exists(result_save_dir):
         os.makedirs(result_save_dir)
     
-    view_label_to_class_mapping = {'PLAX':0, 'PSAX AoV':1, 'Other':2}
-    diagnosis_label_to_class_mapping = {'no_as':0, 'mild/moderate_as':1, 'severe_as':2}
+    view_label_to_class_mapping = {'PLAX':0, 'PSAX':1, 'Other':2}
+    #diagnosis_label_to_class_mapping = {'no_as':0, 'mild/moderate_as':1, 'severe_as':2}
+    diagnosis_label_to_class_mapping = {'no_AS':0, 'mild_AS':1, 'moderate_AS': 2, 'mildtomod_AS': 3, 'severe_AS':4}
     
     train_image_list = []
     train_diagnosis_labels_list = []
@@ -119,17 +120,23 @@ def main(args_dict):
 
     
     #read from the suggested split csv
-    suggested_split_csv = pd.read_csv(os.path.join(suggested_split_file_dir, '{}_{}.csv'.format(dataset_name, fold)))
+    #suggested_split_csv = pd.read_csv(os.path.join(suggested_split_file_dir, '{}_{}.csv'.format(dataset_name, fold)))
+
+    # TODO: change this
+    suggested_split_csv = pd.read_csv('/home/baharkhd/ssl-for-echocardiograms-miccai2024/data/TMED/approved_users_only/DEV56/TMED2_fold0_labeledpart.csv')
     
     for i in trange(suggested_split_csv.shape[0]):
         query_key = suggested_split_csv.iloc[i].query_key
-        split = suggested_split_csv.iloc[i].split
+        #split = suggested_split_csv.iloc[i].split
+        split = suggested_split_csv.iloc[i].diagnosis_classifier_split
     
         if split in ['train', 'val', 'test']:
             data_folder = 'labeled'
             diagnosis_label = suggested_split_csv.iloc[i].diagnosis_label
             diagnosis_label_class = diagnosis_label_to_class_mapping[diagnosis_label] 
             view_label = suggested_split_csv.iloc[i].view_label
+            if not view_label in ["PLXA", "PSAX"]:
+                view_label = "Other"
             view_label_class = view_label_to_class_mapping[view_label]
         
         elif split == 'Unlabeled':
@@ -179,6 +186,8 @@ def main(args_dict):
             feat = dict(image = _bytes_feature(train_image_list[i]),
                         label=_int64_feature(train_diagnosis_labels_list[i])
             )
+            #print("-------", type(feat))
+            #print(feat['label'], type(feat['image']))
 
             record = tf.train.Example(features=tf.train.Features(feature=feat))
             writer.write(record.SerializeToString())
@@ -263,7 +272,7 @@ def main(args_dict):
     
 
 if __name__=='__main__':
-    
+    print("?????")
     args = parser.parse_args()
     result_save_root_dir = args.result_save_root_dir
     dataset_name = args.dataset_name #'TMED-18-18', 'TMED-156-52'
